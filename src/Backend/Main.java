@@ -25,5 +25,10 @@ public class Main {
 
         app.listen(3000); // defaults to port 80
         System.out.println("Server started on port 3000");
+
+        int current_url_id = 2;
+        System.out.println(db.getNotes(current_url_id));
+        System.out.println(db.getImages(current_url_id));
+        System.out.println(db.getFiles(current_url_id));
     }
 }
