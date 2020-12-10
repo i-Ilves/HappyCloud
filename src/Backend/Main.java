@@ -26,6 +26,21 @@ public class Main {
 
         });
 
+        app.get("/rest/notes/", (req, res) -> {
+            List<Note> notes = db.adminGetNotes();
+            res.json(notes);
+        });
+
+        app.get("/rest/images/", (req, res) -> {
+            List<Image> images = db.adminGetImages();
+            res.json(images);
+        });
+
+        app.get("/rest/files/", (req, res) -> {
+            List<File> files = db.adminGetFiles();
+            res.json(files);
+        });
+
         app.get("/rest/images/:id", (req, res) -> {
             int url_id = Integer.parseInt(req.getParam("id"));
 
@@ -52,5 +67,7 @@ public class Main {
 
         app.listen(3000); // defaults to port 80
         System.out.println("Server started on port 3000");
+
+
     }
 }
