@@ -3,6 +3,7 @@ package Backend;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import express.utils.Utils;
 
+import java.nio.file.Files;
 import java.sql.*;
 import java.util.List;
 
@@ -75,6 +76,63 @@ public class Database {
         }
 
         return notes;
+    }
+
+    public List<Note> adminGetNotes() {
+        List<Note> notes = null;
+
+        try {
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM note");
+            ResultSet rs = stmt.executeQuery();
+
+            Note[] notesFromRS = (Note[]) Utils.readResultSetToObject(rs, Note[].class);
+            notes = List.of(notesFromRS);
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return notes;
+    }
+
+    public List<Image> adminGetImages() {
+        List<Image> images = null;
+
+        try {
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM image");
+            ResultSet rs = stmt.executeQuery();
+
+            Image[] imagesFromRS = (Image[]) Utils.readResultSetToObject(rs, Image[].class);
+            images = List.of(imagesFromRS);
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return images;
+    }
+
+    public List<File> adminGetFiles() {
+        List<File> files = null;
+
+        try {
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM file");
+            ResultSet rs = stmt.executeQuery();
+
+            File[] filesFromRS = (File[]) Utils.readResultSetToObject(rs, File[].class);
+            files = List.of(filesFromRS);
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return files;
     }
 
 }
