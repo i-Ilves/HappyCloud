@@ -3,7 +3,6 @@ package Backend;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import express.utils.Utils;
 
-import java.nio.file.Files;
 import java.sql.*;
 import java.util.List;
 
@@ -16,6 +15,25 @@ public class Database {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    public List<Url> getURLids() {
+        List<Url> urlids = null;
+
+        try {
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM url");
+            ResultSet rs = stmt.executeQuery();
+
+            Url[] urlidsFromRS = (Url[]) Utils.readResultSetToObject(rs, Url[].class);
+            urlids = List.of(urlidsFromRS);
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return urlids;
     }
 
     public List<File> getFiles(int url_id) {
@@ -133,6 +151,22 @@ public class Database {
         }
 
         return files;
+    }
+
+    public void createNote(Note note) {
+        try {
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO note (text, url_id, date, title) VALUES(?, ?, ?, ?)");
+            stmt.setString(1, note.getText());
+            stmt.setInt(2, note.getUrl_id());
+            stmt.setLong(3, note.getDate());
+            stmt.setString(4, note.getTitle());
+
+            stmt.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+
     }
 
 }
