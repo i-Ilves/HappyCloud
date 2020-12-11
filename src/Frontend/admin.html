@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/style.css">
+    <script src="/libs/jquery-3.5.1.min.js"></script>
+    <script src="/code.js" defer></script>
 </head>
 <body>
     <h1>Happy Cloud - Admin view</h1>
@@ -19,6 +21,25 @@
     <ul id="files-list"></ul>
     
 
-    <script src="/code.js"></script>
+
+    <form id="new-note-form">
+        <label for="url-id">Choose a url-id to save to</label>
+        <select id="select-url-id" name="url-id">
+          <option value="test">test</option>
+        </select>
+
+        <label for="note-title">Note title</label>
+        <input id="note-title-text" type="text" name="note-title" placeholder="Note title" required>
+
+        <label for="note-text">Note text</label>
+        <textarea id="note-text-text" name="note-text" rows="4" cols="50" placeholder="Note text" required></textarea>
+
+        <input type="date" id="note-date" required>
+
+        <button type="submit">Save</button>
+      </form>
+
+    
+
 </body>
 </html>

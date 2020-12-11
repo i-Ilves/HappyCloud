@@ -1,13 +1,16 @@
 let notes = [];
+let urlids = [];
+
 
 async function getNotes() {
-    let result = await fetch('/rest/notes/');
+    let result = await fetch('/rest/notes');
     notes = await result.json();
-
+    console.log(notes);
     renderNotes();
 }
 
 function renderNotes() {
+    
     let notesList = document.querySelector("#notes-list");
 
     notesList.innerHTML = "";
@@ -17,6 +20,7 @@ function renderNotes() {
             <li>
                 title: ${note.title} <br>
                 text: ${note.text} <br>
+                date: ${new Date(note.date).toLocaleDateString()}
             </li>
         `;
 
@@ -26,7 +30,7 @@ function renderNotes() {
 }
 
 async function getImages() {
-    let result = await fetch('/rest/images/');
+    let result = await fetch('/rest/images');
     images = await result.json();
 
     renderImages();
@@ -51,7 +55,7 @@ function renderImages() {
 }
 
 async function getFiles() {
-    let result = await fetch('/rest/files/');
+    let result = await fetch('/rest/files');
     files = await result.json();
 
     renderFiles();
@@ -75,19 +79,57 @@ function renderFiles() {
 
 }
 
+async function getURLids() {
+    let result = await fetch('/rest/url-ids');
+    urlids = await result.json();
 
+    renderURLids();
+}
 
+function renderURLids() {
+    let selectUrlIdDropdown = document.querySelector("#select-url-id");
 
-async function createUser() {
-    let user = {
-        name: "Cassandra",
-        age: 48
+    selectUrlIdDropdown.innerHTML = "";
+
+    for(let urlId of urlids) {
+        let urlIdOption = `
+        <option value="${urlId.id}">${urlId.link}</option>
+        `;
+
+        selectUrlIdDropdown.innerHTML += urlIdOption;
     }
 
-    let result = await fetch("/rest/users", {
+}
+
+getURLids();
+
+
+$("#new-note-form").submit(function (event) {
+    
+    event.preventDefault();
+
+    let urlId = $("#select-url-id").val();
+    let noteTitle = $("#note-title-text").val();
+    let noteText = $("#note-text-text").val(); 
+    let noteDate = Date.now();
+
+    let noteToAdd = {
+        text: noteText,
+        url_id: urlId,
+        date: noteDate,
+        title: noteTitle
+    }
+    
+    addNoteToDB(noteToAdd);
+
+})
+
+async function addNoteToDB(noteToAdd) {
+    console.log(noteToAdd);
+    let result = await fetch("/rest/notes", {
         method: "POST",
-        body: JSON.stringify(user)
+        body: JSON.stringify(noteToAdd)
     });
 
-    console.log(await result.text())
+    console.log(await result.text());
 }
