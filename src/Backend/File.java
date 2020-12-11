@@ -9,6 +9,7 @@ public class File {
     private Date date;
     private int id;
     private String link;
+    private int note_id;
 
     public File() {
     }
@@ -70,6 +71,14 @@ public class File {
         this.link = link;
     }
 
+    public int getNote_id() {
+        return note_id;
+    }
+
+    public void setNote_id(int note_id) {
+        this.note_id = note_id;
+    }
+
     @Override
     public String toString() {
         return "File{" +
@@ -79,6 +88,7 @@ public class File {
                 ", date=" + date +
                 ", id=" + id +
                 ", link='" + link + '\'' +
+                ", note_id=" + note_id +
                 '}';
     }
 }

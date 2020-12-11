@@ -9,6 +9,7 @@ public class Image {
     private int id;
     private String link;
     private String title;
+    private int note_id;
 
     public Image() {
     }
@@ -70,6 +71,14 @@ public class Image {
         this.title = title;
     }
 
+    public int getNote_id() {
+        return note_id;
+    }
+
+    public void setNote_id(int note_id) {
+        this.note_id = note_id;
+    }
+
     @Override
     public String toString() {
         return "Image{" +
@@ -79,6 +88,7 @@ public class Image {
                 ", id=" + id +
                 ", link='" + link + '\'' +
                 ", title='" + title + '\'' +
+                ", note_id=" + note_id +
                 '}';
     }
 }

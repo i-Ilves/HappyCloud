@@ -13,11 +13,6 @@ public class Main {
         Express app = new Express();
         Database db = new Database();
 
-        // req = Request, res = Response
-        app.get("/hello-world", (req, res) -> {
-            res.send("Hello World");
-        });
-
         app.get("/rest/notes/:id", (req, res) -> {
             int url_id = Integer.parseInt(req.getParam("id"));
 
