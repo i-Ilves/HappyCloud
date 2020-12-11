@@ -5,14 +5,14 @@ import java.util.Date;
 public class Note {
     private String text;
     private int url_id;
-    private Date date;
+    private long date;
     private int id;
     private String title;
 
     public Note() {
     }
 
-    public Note(String text, int url_id, Date date, int id, String title) {
+    public Note(String text, int url_id, long date, int id, String title) {
         this.text = text;
         this.url_id = url_id;
         this.date = date;
@@ -36,11 +36,11 @@ public class Note {
         this.url_id = url_id;
     }
 
-    public Date getDate() {
+    public long getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(long date) {
         this.date = date;
     }
 

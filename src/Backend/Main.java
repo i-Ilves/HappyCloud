@@ -13,6 +13,11 @@ public class Main {
         Express app = new Express();
         Database db = new Database();
 
+        app.get("/rest/url-ids", (req, res) -> {
+            List<Url> urlids = db.getURLids();
+            res.json(urlids);
+        });
+
         app.get("/rest/notes/:id", (req, res) -> {
             int url_id = Integer.parseInt(req.getParam("id"));
 
@@ -21,17 +26,28 @@ public class Main {
 
         });
 
-        app.get("/rest/notes/", (req, res) -> {
+        app.get("/rest/notes", (req, res) -> {
             List<Note> notes = db.adminGetNotes();
             res.json(notes);
         });
 
-        app.get("/rest/images/", (req, res) -> {
+        app.post("/rest/notes", (req, res) -> {
+
+            Note note = (Note) req.getBody(Note.class);
+
+            System.out.println(note.toString());
+
+            db.createNote(note);
+
+            res.send("post OK");
+        });
+
+        app.get("/rest/images", (req, res) -> {
             List<Image> images = db.adminGetImages();
             res.json(images);
         });
 
-        app.get("/rest/files/", (req, res) -> {
+        app.get("/rest/files", (req, res) -> {
             List<File> files = db.adminGetFiles();
             res.json(files);
         });
