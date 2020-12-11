@@ -35,11 +35,17 @@ public class Main {
 
             Note note = (Note) req.getBody(Note.class);
 
-            System.out.println(note.toString());
-
             db.createNote(note);
 
             res.send("post OK");
+        });
+
+        app.post("/rest/notes/update", (req, res) -> {
+            Note note = (Note) req.getBody(Note.class);
+
+            db.updateNote(note);
+
+            res.send("update OK");
         });
 
         app.get("/rest/images", (req, res) -> {

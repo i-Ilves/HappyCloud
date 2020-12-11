@@ -20,11 +20,25 @@ function renderNotes() {
             <li>
                 title: ${note.title} <br>
                 text: ${note.text} <br>
-                date: ${new Date(note.date).toLocaleDateString()}
+                date: ${new Date(note.date).toLocaleDateString()} <br>
+                <button class="edit-button" type="button" onclick="loadNote(${note.id})">Edit</button>
             </li>
         `;
 
         notesList.innerHTML += noteLi;
+    }
+
+}
+
+function loadNote(id) {
+
+    for(let note of notes) {
+        if (note.id == id) {
+            $("#select-url-id").val(note.url_id);
+            $("#note-title-text").val(note.title);
+            $("#note-text-text").val(note.text);
+            $("#note-id").val(note.id);
+        }
     }
 
 }
@@ -111,6 +125,7 @@ $("#new-note-form").submit(function (event) {
     let urlId = $("#select-url-id").val();
     let noteTitle = $("#note-title-text").val();
     let noteText = $("#note-text-text").val(); 
+    let noteID = $("#note-id").val(); 
     let noteDate = Date.now();
 
     let noteToAdd = {
@@ -119,17 +134,39 @@ $("#new-note-form").submit(function (event) {
         date: noteDate,
         title: noteTitle
     }
+
+    let noteToEdit = {
+        text: noteText,
+        url_id: urlId,
+        date: noteDate,
+        title: noteTitle,
+        id: noteID
+    }
     
-    addNoteToDB(noteToAdd);
+    if ( noteID == "" ) {
+        addNoteToDB(noteToAdd);
+    } else {
+        updateNoteAtDB(noteToEdit);
+    }
 
 })
 
 async function addNoteToDB(noteToAdd) {
-    console.log(noteToAdd);
     let result = await fetch("/rest/notes", {
         method: "POST",
         body: JSON.stringify(noteToAdd)
     });
+
+    console.log(await result.text());
+}
+
+async function updateNoteAtDB(noteToEdit) {
+    let result = await fetch("/rest/notes/update", {
+        method: "POST",
+        body: JSON.stringify(noteToEdit)
+    });
+
+    console.log(noteToEdit);
 
     console.log(await result.text());
 }
