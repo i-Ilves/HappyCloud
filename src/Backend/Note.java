@@ -8,16 +8,18 @@ public class Note {
     private long date;
     private int id;
     private String title;
+    private String image_url;
 
     public Note() {
     }
 
-    public Note(String text, int url_id, long date, int id, String title) {
+    public Note(String text, int url_id, long date, int id, String title, String image_url) {
         this.text = text;
         this.url_id = url_id;
         this.date = date;
         this.id = id;
         this.title = title;
+        this.image_url = image_url;
     }
 
     public String getText() {
@@ -60,6 +62,14 @@ public class Note {
         this.title = title;
     }
 
+    public String getImage_url() {
+        return image_url;
+    }
+
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
+    }
+
     @Override
     public String toString() {
         return "Note{" +
@@ -68,6 +78,7 @@ public class Note {
                 ", date=" + date +
                 ", id=" + id +
                 ", title='" + title + '\'' +
+                ", image_url='" + image_url + '\'' +
                 '}';
     }
 }

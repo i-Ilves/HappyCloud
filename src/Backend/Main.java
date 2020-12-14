@@ -2,6 +2,7 @@ package Backend;
 
 import express.Express;
 import express.middleware.Middleware;
+import org.apache.commons.fileupload.FileItem;
 
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -12,6 +13,19 @@ public class Main {
     public static void main(String[] args) {
         Express app = new Express();
         Database db = new Database();
+
+        app.post("/api/upload/image", (req, res) -> {
+            String imageUrl = null;
+
+            try {
+                List<FileItem> images = req.getFormData("images");
+                imageUrl = db.uploadImage(images.get(0));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            res.send(imageUrl);
+        });
 
         app.get("/rest/url-ids", (req, res) -> {
             List<Url> urlids = db.getURLids();

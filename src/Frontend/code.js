@@ -5,7 +5,6 @@ let urlids = [];
 async function getNotes() {
     let result = await fetch('/rest/notes');
     notes = await result.json();
-    console.log(notes);
     renderNotes();
 }
 
@@ -38,8 +37,11 @@ function loadNote(id) {
             $("#note-title-text").val(note.title);
             $("#note-text-text").val(note.text);
             $("#note-id").val(note.id);
+            console.log(note.image_url);
         }
     }
+
+    $("#note-image, label[for='note-image']").remove();
 
 }
 
@@ -118,9 +120,11 @@ function renderURLids() {
 getURLids();
 
 
-$("#new-note-form").submit(function (event) {
+$("#new-note-form").submit(async function (event) {
     
     event.preventDefault();
+
+    let noteToAdd = {};
 
     let urlId = $("#select-url-id").val();
     let noteTitle = $("#note-title-text").val();
@@ -128,11 +132,30 @@ $("#new-note-form").submit(function (event) {
     let noteID = $("#note-id").val(); 
     let noteDate = Date.now();
 
-    let noteToAdd = {
-        text: noteText,
-        url_id: urlId,
-        date: noteDate,
-        title: noteTitle
+    if( $('#note-image').length > 0) {
+
+        let images = document.getElementById('note-image').files;
+        let formData = new FormData();
+
+        for(let image of images) {
+            formData.append('images', image, image.name);
+        }
+
+        let uploadResult = await fetch('/api/upload/image', {
+            method: 'POST',
+            body: formData
+        });
+
+        let noteImageUrl = await uploadResult.text();
+        
+        noteToAdd = {
+            text: noteText,
+            url_id: urlId,
+            date: noteDate,
+            title: noteTitle,
+            image_url: noteImageUrl
+        }
+        
     }
 
     let noteToEdit = {
@@ -165,8 +188,6 @@ async function updateNoteAtDB(noteToEdit) {
         method: "POST",
         body: JSON.stringify(noteToEdit)
     });
-
-    console.log(noteToEdit);
 
     console.log(await result.text());
 }

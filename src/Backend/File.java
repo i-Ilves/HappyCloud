@@ -6,7 +6,7 @@ public class File {
     private String title;
     private int url_id;
     private double size;
-    private Date date;
+    private long date;
     private int id;
     private String link;
     private int note_id;
@@ -14,7 +14,7 @@ public class File {
     public File() {
     }
 
-    public File(String title, int url_id, double size, Date date, int id, String link) {
+    public File(String title, int url_id, double size, long date, int id, String link) {
         this.title = title;
         this.url_id = url_id;
         this.size = size;
@@ -35,7 +35,7 @@ public class File {
         return size;
     }
 
-    public Date getDate() {
+    public long getDate() {
         return date;
     }
 
@@ -59,7 +59,7 @@ public class File {
         this.size = size;
     }
 
-    public void setDate(Date date) {
+    public void setDate(long date) {
         this.date = date;
     }
 

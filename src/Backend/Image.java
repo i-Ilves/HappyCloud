@@ -1,11 +1,9 @@
 package Backend;
 
-import java.util.Date;
-
 public class Image {
     private double size;
     private int url_id;
-    private Date date;
+    private long date;
     private int id;
     private String link;
     private String title;
@@ -14,7 +12,7 @@ public class Image {
     public Image() {
     }
 
-    public Image(double size, int url_id, Date date, int id, String link, String title) {
+    public Image(double size, int url_id, long date, int id, String link, String title) {
         this.size = size;
         this.url_id = url_id;
         this.date = date;
@@ -39,11 +37,11 @@ public class Image {
         this.url_id = url_id;
     }
 
-    public Date getDate() {
+    public long getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(long date) {
         this.date = date;
     }
 

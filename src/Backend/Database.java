@@ -2,7 +2,10 @@ package Backend;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import express.utils.Utils;
+import org.apache.commons.fileupload.FileItem;
 
+import java.io.FileOutputStream;
+import java.nio.file.Paths;
 import java.sql.*;
 import java.util.List;
 
@@ -155,11 +158,12 @@ public class Database {
 
     public void createNote(Note note) {
         try {
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO note (text, url_id, date, title) VALUES(?, ?, ?, ?)");
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO note (text, url_id, date, title, image_url) VALUES(?, ?, ?, ?, ?)");
             stmt.setString(1, note.getText());
             stmt.setInt(2, note.getUrl_id());
             stmt.setLong(3, note.getDate());
             stmt.setString(4, note.getTitle());
+            stmt.setString(5, note.getImage_url());
 
             stmt.executeUpdate();
         } catch (SQLException throwables) {
@@ -184,6 +188,20 @@ public class Database {
         }
 
 
+    }
+
+    public String uploadImage(FileItem image) {
+
+        String imageUrl = "/uploads/" + image.getName();
+
+        try (var os = new FileOutputStream(Paths.get("src/Frontend" + imageUrl).toString())) {
+            os.write(image.get());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return imageUrl;
     }
 
 }
