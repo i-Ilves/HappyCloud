@@ -41,6 +41,8 @@ function loadNote(id) {
         }
     }
 
+    $("#note-image, label[for='note-image']").remove();
+
 }
 
 async function getImages() {
@@ -122,33 +124,38 @@ $("#new-note-form").submit(async function (event) {
     
     event.preventDefault();
 
-    let images = document.getElementById('note-image').files;
-    let formData = new FormData();
-
-    for(let image of images) {
-        formData.append('images', image, image.name);
-    }
-
-    let uploadResult = await fetch('/api/upload/image', {
-        method: 'POST',
-        body: formData
-    });
+    let noteToAdd = {};
 
     let urlId = $("#select-url-id").val();
     let noteTitle = $("#note-title-text").val();
     let noteText = $("#note-text-text").val(); 
     let noteID = $("#note-id").val(); 
     let noteDate = Date.now();
-    let noteImageUrl = await uploadResult.text();
 
-    console.log(noteImageUrl);
+    if( $('#note-image').length > 0) {
 
-    let noteToAdd = {
-        text: noteText,
-        url_id: urlId,
-        date: noteDate,
-        title: noteTitle,
-        image_url: noteImageUrl
+        let images = document.getElementById('note-image').files;
+        let formData = new FormData();
+
+        for(let image of images) {
+            formData.append('images', image, image.name);
+        }
+
+        let uploadResult = await fetch('/api/upload/image', {
+            method: 'POST',
+            body: formData
+        });
+
+        let noteImageUrl = await uploadResult.text();
+        
+        noteToAdd = {
+            text: noteText,
+            url_id: urlId,
+            date: noteDate,
+            title: noteTitle,
+            image_url: noteImageUrl
+        }
+        
     }
 
     let noteToEdit = {
@@ -156,14 +163,12 @@ $("#new-note-form").submit(async function (event) {
         url_id: urlId,
         date: noteDate,
         title: noteTitle,
-        id: noteID,
-        image_url: noteImageUrl
+        id: noteID
     }
     
     if ( noteID == "" ) {
         addNoteToDB(noteToAdd);
     } else {
-        console.log("Fired update")
         updateNoteAtDB(noteToEdit);
     }
 

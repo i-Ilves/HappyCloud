@@ -175,13 +175,12 @@ public class Database {
 
     public void updateNote(Note note) {
         try {
-            PreparedStatement stmt = conn.prepareStatement("UPDATE note SET text = ?, url_id = ?, date = ?, title = ?, image_url = ? WHERE id = ?");
+            PreparedStatement stmt = conn.prepareStatement("UPDATE note SET text = ?, url_id = ?, date = ?, title = ? WHERE id = ?");
             stmt.setString(1, note.getText());
             stmt.setInt(2, note.getUrl_id());
             stmt.setLong(3, note.getDate());
             stmt.setString(4, note.getTitle());
             stmt.setInt(5, note.getId());
-            stmt.setString(6, note.getImage_url());
 
             stmt.executeUpdate();
         } catch (SQLException throwables) {
