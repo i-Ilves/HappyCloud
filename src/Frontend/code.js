@@ -16,11 +16,12 @@ function renderNotes() {
 
     for(let note of notes) {
         let noteLi = `
-            <li>
+            <li id="note-list-item-${note.id}">
                 title: ${note.title} <br>
                 text: ${note.text} <br>
                 date: ${new Date(note.date).toLocaleDateString()} <br>
                 <button class="edit-button" type="button" onclick="loadNote(${note.id})">Edit</button>
+                <button class="delete-button" type="button" onclick="deleteNote(${note.id})">Delete</button>
             </li>
         `;
 
@@ -43,6 +44,22 @@ function loadNote(id) {
 
     $("#note-image, label[for='note-image']").remove();
 
+}
+
+async function deleteNote(id) {
+
+    noteToDelete = {
+        id: id
+    };
+
+    let result = await fetch("/rest/notes/delete", {
+        method: "DELETE",
+        body: JSON.stringify(noteToDelete)
+    });
+
+    console.log(await result.text());
+
+    $("#note-list-item-" + id).remove();
 }
 
 async function getImages() {

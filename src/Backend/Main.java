@@ -45,6 +45,14 @@ public class Main {
             res.json(notes);
         });
 
+        app.delete("/rest/notes/delete", (req, res) -> {
+            Note note = (Note) req.getBody(Note.class);
+
+            db.deleteNote(note);
+
+            res.json(note);
+        });
+
         app.post("/rest/notes", (req, res) -> {
 
             Note note = (Note) req.getBody(Note.class);
