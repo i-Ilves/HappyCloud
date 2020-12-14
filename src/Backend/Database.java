@@ -203,5 +203,18 @@ public class Database {
 
         return imageUrl;
     }
+    
+    public void deleteNote(Note note) {
+        try {
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM note WHERE id = ?");
+            stmt.setInt(1, note.getId());
+
+            stmt.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+
+    }
 
 }
