@@ -5,7 +5,6 @@ let urlids = [];
 async function getNotes() {
     let result = await fetch('/rest/notes');
     notes = await result.json();
-    console.log(notes);
     renderNotes();
 }
 
@@ -38,6 +37,7 @@ function loadNote(id) {
             $("#note-title-text").val(note.title);
             $("#note-text-text").val(note.text);
             $("#note-id").val(note.id);
+            console.log(note.image_url);
         }
     }
 
@@ -118,21 +118,37 @@ function renderURLids() {
 getURLids();
 
 
-$("#new-note-form").submit(function (event) {
+$("#new-note-form").submit(async function (event) {
     
     event.preventDefault();
+
+    let images = document.getElementById('note-image').files;
+    let formData = new FormData();
+
+    for(let image of images) {
+        formData.append('images', image, image.name);
+    }
+
+    let uploadResult = await fetch('/api/upload/image', {
+        method: 'POST',
+        body: formData
+    });
 
     let urlId = $("#select-url-id").val();
     let noteTitle = $("#note-title-text").val();
     let noteText = $("#note-text-text").val(); 
     let noteID = $("#note-id").val(); 
     let noteDate = Date.now();
+    let noteImageUrl = await uploadResult.text();
+
+    console.log(noteImageUrl);
 
     let noteToAdd = {
         text: noteText,
         url_id: urlId,
         date: noteDate,
-        title: noteTitle
+        title: noteTitle,
+        image_url: noteImageUrl
     }
 
     let noteToEdit = {
@@ -140,12 +156,14 @@ $("#new-note-form").submit(function (event) {
         url_id: urlId,
         date: noteDate,
         title: noteTitle,
-        id: noteID
+        id: noteID,
+        image_url: noteImageUrl
     }
     
     if ( noteID == "" ) {
         addNoteToDB(noteToAdd);
     } else {
+        console.log("Fired update")
         updateNoteAtDB(noteToEdit);
     }
 
@@ -165,8 +183,6 @@ async function updateNoteAtDB(noteToEdit) {
         method: "POST",
         body: JSON.stringify(noteToEdit)
     });
-
-    console.log(noteToEdit);
 
     console.log(await result.text());
 }
