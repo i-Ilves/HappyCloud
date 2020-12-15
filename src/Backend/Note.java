@@ -9,17 +9,19 @@ public class Note {
     private int id;
     private String title;
     private String image_url;
+    private String file_url;
 
     public Note() {
     }
 
-    public Note(String text, int url_id, long date, int id, String title, String image_url) {
+    public Note(String text, int url_id, long date, int id, String title, String image_url, String file_url) {
         this.text = text;
         this.url_id = url_id;
         this.date = date;
         this.id = id;
         this.title = title;
         this.image_url = image_url;
+        this.file_url = file_url;
     }
 
     public String getText() {
@@ -70,6 +72,14 @@ public class Note {
         this.image_url = image_url;
     }
 
+    public String getFile_url() {
+        return file_url;
+    }
+
+    public void setFile_url(String file_url) {
+        this.file_url = file_url;
+    }
+
     @Override
     public String toString() {
         return "Note{" +
@@ -79,6 +89,8 @@ public class Note {
                 ", id=" + id +
                 ", title='" + title + '\'' +
                 ", image_url='" + image_url + '\'' +
+                ", file_url='" + file_url + '\'' +
                 '}';
     }
+
 }

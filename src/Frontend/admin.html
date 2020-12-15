@@ -34,8 +34,10 @@
         <label for="note-text">Note text</label>
         <textarea id="note-text-text" name="note-text" rows="4" cols="50" placeholder="Note text" required></textarea>
 
-        <label for="note-image">Note images (jpg/png accepted)</label>
-        <input type="file" id="note-image" name="note-image" accept="image/png, image/jpeg" required>
+        <label for="note-image">Note images</label>
+        <input multiple type="file" id="note-image" name="note-image" accept="image/*">
+        <label for="note-file">Note file</label>
+        <input multiple type="file" id="note-file" name="note-file" accept=".pdf, .doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
 
 
         <input id="note-id" type="hidden" name="note-id">
