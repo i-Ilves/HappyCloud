@@ -11,20 +11,32 @@ async function getNotes() {
 function renderNotes() {
     
     let notesList = document.querySelector("#notes-list");
-
+    let noteLi;
     notesList.innerHTML = "";
 
     for(let note of notes) {
-        let noteLi = `
+        if (note.image_url == "") {
+            noteLi = `
             <li id="note-list-item-${note.id}">
-                <img src="${note.image_url}" alt="image for ${note.title}">
                 title: ${note.title} <br>
                 text: ${note.text} <br>
                 date: ${new Date(note.date).toLocaleDateString()} <br>
                 <button class="edit-button" type="button" onclick="loadNote(${note.id})">Edit</button>
                 <button class="delete-button" type="button" onclick="deleteNote(${note.id})">Delete</button>
             </li>
-        `;
+            `;
+        } else {
+            noteLi = `
+            <li id="note-list-item-${note.id}">
+                <img src="${note.image_url}">
+                title: ${note.title} <br>
+                text: ${note.text} <br>
+                date: ${new Date(note.date).toLocaleDateString()} <br>
+                <button class="edit-button" type="button" onclick="loadNote(${note.id})">Edit</button>
+                <button class="delete-button" type="button" onclick="deleteNote(${note.id})">Delete</button>
+            </li>
+            `;
+        }
 
         notesList.innerHTML += noteLi;
     }
