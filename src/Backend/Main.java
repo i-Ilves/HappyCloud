@@ -27,6 +27,19 @@ public class Main {
             res.send(imageUrl);
         });
 
+        app.post("/api/upload/file", (req, res) -> {
+            String fileUrl = null;
+
+            try {
+                List<FileItem> files = req.getFormData("files");
+                fileUrl = db.uploadFile(files.get(0));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            res.send(fileUrl);
+        });
+
         app.get("/rest/url-ids", (req, res) -> {
             List<Url> urlids = db.getURLids();
             res.json(urlids);

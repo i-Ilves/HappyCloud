@@ -42,7 +42,9 @@ function loadNote(id) {
         }
     }
 
+    // Faking a new form for updates using the same form
     $("#note-image, label[for='note-image']").remove();
+    $("#note-file, label[for='note-file']").remove();
 
 }
 
@@ -141,51 +143,73 @@ $("#new-note-form").submit(async function (event) {
     
     event.preventDefault();
 
-    let noteToAdd = {};
-
     let urlId = $("#select-url-id").val();
     let noteTitle = $("#note-title-text").val();
     let noteText = $("#note-text-text").val(); 
     let noteID = $("#note-id").val(); 
     let noteDate = Date.now();
 
-    if( $('#note-image').length > 0) {
+    // Is hidden field empty - then make a new post
+    if (noteID == "") {
 
-        let images = document.getElementById('note-image').files;
-        let formData = new FormData();
+        let noteToAdd = {};
 
-        for(let image of images) {
-            formData.append('images', image, image.name);
-        }
-
-        let uploadResult = await fetch('/api/upload/image', {
-            method: 'POST',
-            body: formData
-        });
-
-        let noteImageUrl = await uploadResult.text();
-        
         noteToAdd = {
             text: noteText,
             url_id: urlId,
             date: noteDate,
-            title: noteTitle,
-            image_url: noteImageUrl
+            title: noteTitle
+        }
+
+        if( $('#note-image').length > 0) {
+
+            let images = document.getElementById('note-image').files;
+            let formData = new FormData();
+
+            for(let image of images) {
+                formData.append('images', image, image.name);
+            }
+
+            let uploadResult = await fetch('/api/upload/image', {
+                method: 'POST',
+                body: formData
+            });
+
+            noteToAdd.image_url = await uploadResult.text();
+            
         }
         
-    }
+        if( $('#note-file').length > 0) {
 
-    let noteToEdit = {
-        text: noteText,
-        url_id: urlId,
-        date: noteDate,
-        title: noteTitle,
-        id: noteID
-    }
-    
-    if ( noteID == "" ) {
+            let files = document.getElementById('note-file').files;
+            let formData = new FormData();
+
+            for(let file of files) {
+                formData.append('files', file, file.name);
+            }
+
+            let uploadResult = await fetch('/api/upload/file', {
+                method: 'POST',
+                body: formData
+            });
+
+            noteToAdd.file_url = await uploadResult.text();
+            
+        }
+
         addNoteToDB(noteToAdd);
+
+        // Else if id is not empty update
     } else {
+        
+        let noteToEdit = {
+            text: noteText,
+            url_id: urlId,
+            date: noteDate,
+            title: noteTitle,
+            id: noteID
+        }
+    
         updateNoteAtDB(noteToEdit);
     }
 

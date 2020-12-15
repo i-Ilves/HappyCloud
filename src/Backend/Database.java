@@ -158,12 +158,13 @@ public class Database {
 
     public void createNote(Note note) {
         try {
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO note (text, url_id, date, title, image_url) VALUES(?, ?, ?, ?, ?)");
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO note (text, url_id, date, title, image_url, file_url) VALUES(?, ?, ?, ?, ?, ?)");
             stmt.setString(1, note.getText());
             stmt.setInt(2, note.getUrl_id());
             stmt.setLong(3, note.getDate());
             stmt.setString(4, note.getTitle());
             stmt.setString(5, note.getImage_url());
+            stmt.setString(6, note.getFile_url());
 
             stmt.executeUpdate();
         } catch (SQLException throwables) {
@@ -192,7 +193,7 @@ public class Database {
 
     public String uploadImage(FileItem image) {
 
-        String imageUrl = "/uploads/" + image.getName();
+        String imageUrl = "/uploads/images/" + image.getName();
 
         try (var os = new FileOutputStream(Paths.get("src/Frontend" + imageUrl).toString())) {
             os.write(image.get());
@@ -202,6 +203,20 @@ public class Database {
         }
 
         return imageUrl;
+    }
+
+    public String uploadFile(FileItem file) {
+
+        String fileUrl = "/uploads/files/" + file.getName();
+
+        try (var os = new FileOutputStream(Paths.get("src/Frontend" + fileUrl).toString())) {
+            os.write(file.get());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return fileUrl;
     }
     
     public void deleteNote(Note note) {
