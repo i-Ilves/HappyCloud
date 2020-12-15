@@ -17,6 +17,7 @@ function renderNotes() {
     for(let note of notes) {
         let noteLi = `
             <li id="note-list-item-${note.id}">
+                <img src="${note.image_url}" alt="image for ${note.title}">
                 title: ${note.title} <br>
                 text: ${note.text} <br>
                 date: ${new Date(note.date).toLocaleDateString()} <br>
