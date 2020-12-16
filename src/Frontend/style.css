@@ -1,0 +1,253 @@
+/*-------------
+Fonts
+-------------*/
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&display=swap');
+
+
+/*-------------
+CSS Variables
+-------------*/
+
+:root {
+    --nav-background: rgba(11, 13, 14, 0.938);
+    --hover-color: rgba(13, 181, 233, 0.5);
+}
+
+/*-------------
+page reset
+-------------*/
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/*-------------
+generic styling
+-------------*/
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #222;
+    font-family: "Open", "Sans-Condensed";
+    font-weight: 300;
+}
+
+body .content{
+    height: 200vh;
+    background-image: url(//unsplash.it/1000/1000);
+    background-color: #333;
+    background-blend-mode: multiply;
+    background-size: cover;
+    display: grid;
+    padding: 30vh;
+}
+
+/*-------------
+NAV styling
+-------------*/
+
+header {
+    background: var(--nav-background);
+    text-align: center;
+    position: fixed;
+    z-index: 50;
+    width: 100%;
+}
+
+header nav {
+    position: absolute;
+    text-align: left;
+    top: 100%;
+    left: 0;
+    background: var(--nav-background);
+    width: 100%;
+
+    display: none;
+}
+
+header nav ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+header nav ul li {
+    margin: 0 0 1em 1em;
+
+}
+
+header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+}
+
+header nav ul li a:hover {
+    color: rgb(52, 45, 80);
+}
+
+/*-------------
+.5 är samma som 0.5 skriver vi inget innan . så är det 0
+-------------*/
+
+header nav ul li .nav-icon{
+    display: inline-block;
+    font-size: 1em;
+    margin-right: .5em;
+    width: 1em;
+    text-align: center;
+    color: rgba(255, 255, 255, .6);
+}
+.nav-toggle {
+    display: none;
+}
+
+.nav-toggle:checked ~ nav {
+    display: block;
+
+}
+
+header .nav-toggle__label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-left: 1em;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+header .nav-toggle__label span,
+header .nav-toggle__label span::before,
+header .nav-toggle__label span::after {
+    display: block;
+    background: white;
+    height: 2px;
+    width: 2em;
+    border-radius: 2px;
+    position: relative;
+    transition: all ease-in-out 0.4s;
+
+}
+
+header .nav-toggle__label span::before,
+header .nav-toggle__label span::after {
+   content: '';
+   position: absolute; 
+}
+
+header .nav-toggle__label span::before{
+    bottom: 7px;
+}
+header .nav-toggle__label span::after {
+   top: 7px;
+}
+
+#av-toggle__label.open span:nth-child(2),
+#av-toggle__label.open span:nth-child(3){
+    width: 0;
+    opacity: 0;
+}
+
+#av-toggle__label.open span:nth-child(4){
+    transform: rotate(45deg);
+    top: -36px;
+}
+
+#av-toggle__label.open span:nth-child(1){
+    transform: rotate(-45deg);
+    top: 36px;
+}
+
+.logo {
+    color: rgb(252, 243, 243);
+}
+
+#list-div {
+    margin-top: 0%;
+    display: inline-block;
+    position: relative;
+    color: white;
+}
+
+#new-note-form {
+    
+    padding: 0%;
+    display: inline-block;
+    position: relative;
+    padding: 0%;
+    color: white;
+}
+
+/*-------------
+NAV styling desktop
+-------------*/
+
+@media screen and (min-width: 800px) {
+
+    header{
+        display: grid;
+        grid-template-columns: 1fr auto minmax(600px, 3fr) 1fr;
+    }
+
+    header .nav-toggle__label {
+        display: none;
+    }
+
+    header .logo{
+        grid-column: 2 / 3;
+    }
+
+    header nav {
+        all: unset;
+        grid-column: 3 / 4;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    header nav ul {
+        display: flex;
+    }
+
+    header nav ul li {
+        margin-left: 3em;
+        margin-bottom: 0;
+    }
+
+    header nav ul li a {
+        opacity: 1;
+        position: relative;
+    }
+.logo {
+    color: rgb(252, 243, 243);
+}
+
+#new-note-form {
+    
+    padding: 0%;
+    display: inline-block;
+    position: relative;
+    padding: 0%;
+    color: white;
+    height: 200px;
+    padding-top: 40px;
+    margin-bottom: 0%;
+}
+
+#list-div {
+    margin-top: 0%;
+    display: inline-block;
+    position: relative;
+    color: white;
+}
+
+#list-div ul {
+    width: 29%;
+}
+}
