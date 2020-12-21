@@ -37,29 +37,27 @@
 
     <form id="new-note-form">
         <label for="url-id">Choose a url-id to save to</label>
-        <select id="select-url-id" name="url-id">
+        <select id="select-url-id" name="url-id"><br>
           <option value="test">test</option>
-        </select>
+        </select><br><br>
 
         <label for="note-title">Note title</label>
-        <input id="note-title-text" type="text" name="note-title" placeholder="Note title" required>
+        <input id="note-title-text" type="text" name="note-title" placeholder="Note title" required><br><br>
 
-        <label for="note-text">Note text</label>
+        <label for="note-text">Note text</label><br>
         <textarea id="note-text-text" name="note-text" rows="4" cols="50" placeholder="Note text" required></textarea>
-
+        <br><br>
         <label for="note-image">Note images</label>
-        <input multiple type="file" id="note-image" name="note-image" accept="image/*">
+        <input multiple type="file" id="note-image" name="note-image" accept="image/*"><br>
         <label for="note-file">Note file</label>
         <input multiple type="file" id="note-file" name="note-file" accept=".pdf, .doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
 
-        <input id="note-id" type="hidden" name="note-id">
+        <input id="note-id" type="hidden" name="note-id"><br><br>
 
         <button type="submit">Save</button>
       </form>
-<div id="list-div">
-    <ul id="notes-list"></ul>
-    <ul id="images-list"></ul>
-    <ul id="files-list"></ul>
+<div class="list-div">
+    <ul id="notes-list"></ul> <ul id="images-list"></ul> <ul id="files-list"></ul>
 </div>
     </div>
 

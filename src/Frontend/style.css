@@ -168,7 +168,8 @@ header .nav-toggle__label span::after {
     color: rgb(252, 243, 243);
 }
 
-#list-div {
+.list-div {
+    text-align: center;
     margin-top: 0%;
     display: inline-block;
     position: relative;
@@ -178,7 +179,8 @@ header .nav-toggle__label span::after {
 #new-note-form {
     
     padding: 0%;
-    display: inline-block;
+    display: inline;
+    margin: 0%;
     position: relative;
     padding: 0%;
     color: white;
@@ -230,24 +232,22 @@ NAV styling desktop
 
 #new-note-form {
     
-    padding: 0%;
-    display: inline-block;
-    position: relative;
-    padding: 0%;
+    padding-bottom: 0%;
     color: white;
-    height: 200px;
     padding-top: 40px;
     margin-bottom: 0%;
 }
 
-#list-div {
+.list-div {
     margin-top: 0%;
-    display: inline-block;
+    padding: 0%;
+    display: flex;
     position: relative;
     color: white;
+    width: 100vh;
 }
 
 #list-div ul {
-    width: 29%;
+    display: flex;
 }
 }
